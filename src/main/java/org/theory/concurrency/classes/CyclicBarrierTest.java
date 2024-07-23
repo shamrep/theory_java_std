@@ -1,4 +1,4 @@
-package org.theory.concurrency;
+package org.theory.concurrency.classes;
 
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
