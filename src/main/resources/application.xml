@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+    <!-- bean definitions here -->
+    <bean id="driver" name="BD_driver" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="PostgresDriver"/>
+    </bean>
+    <!--    <bean id="pool1" name="pool_name_1, pool_name_3" class="org.theory.spring_std.ConnectionPool"/>-->
+    <bean id="pool2" name="pool_name_2" class="org.theory.spring_std.ConnectionPool">
+        <constructor-arg index="0" type="java.lang.String" value="postgres"/>
+        <constructor-arg index="3">
+            <map>
+                <entry key="url" value="test_url"/>
+                <entry key="password" value="1234"/>
+            </map>
+        </constructor-arg>
+        <constructor-arg index="1" value="10"/>
+        <constructor-arg index="2" type="java.util.List">
+            <list>
+                <value>--arg1=value1</value>
+                <value>--arg2=value2</value>
+            </list>
+        </constructor-arg>
+
+    </bean>
+</beans>

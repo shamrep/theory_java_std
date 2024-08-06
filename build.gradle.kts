@@ -18,6 +18,8 @@ dependencies {
     implementation("com.vladmihalcea:hibernate-types-52:2.21.1")
     implementation("org.slf4j:slf4j-api:2.0.13")
 
+    implementation("org.springframework:spring-core:6.1.11")
+    implementation("org.springframework:spring-context:6.1.11")
 
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
