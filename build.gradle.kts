@@ -1,7 +1,6 @@
 plugins {
-    id("java")
+    application
 }
-
 group = "org.theory"
 version = "1.0-SNAPSHOT"
 
@@ -27,4 +26,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+application {
+    mainClass = "org.theory.spring_std.dependency_injection.exmpl_2.CarAppRunner"
 }

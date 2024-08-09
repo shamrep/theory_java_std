@@ -1,29 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
-        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
-
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
     <!-- bean definitions here -->
-    <bean id="driver" name="BD_driver" class="java.lang.String">
-        <constructor-arg type="java.lang.String" value="PostgresDriver"/>
+
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="locations" value="application.properties"/>
     </bean>
-    <!--    <bean id="pool1" name="pool_name_1, pool_name_3" class="org.theory.spring_std.ConnectionPool"/>-->
-    <bean id="pool2" name="pool_name_2" class="org.theory.spring_std.ConnectionPool">
-        <constructor-arg index="0" type="java.lang.String" value="postgres"/>
-        <constructor-arg index="3">
-            <map>
-                <entry key="url" value="test_url"/>
-                <entry key="password" value="1234"/>
-            </map>
+
+    <bean id="driver" name="BD_driver" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="${db.driver}"/>
+    </bean>
+    <!--    <bean id="pool1" name="pool_name_1, pool_name_3" class="org.theory.spring_std.dependency_injection.exmpl_1.ConnectionPool"/>-->
+
+
+    <bean id="pool2"
+          name="pool_name_2"
+          class="org.theory.spring_std.dependency_injection.exmpl_1.ConnectionPool"
+          init-method="init"
+          destroy-method="destroy">
+<!--          scope="singleton">-->
+        <constructor-arg name="driver" index="0" type="java.lang.String" value="${db.username}"/>
+        <constructor-arg name="properties" index="3">
+         <null/>
         </constructor-arg>
-        <constructor-arg index="1" value="10"/>
-        <constructor-arg index="2" type="java.util.List">
+        <constructor-arg name="poolSize" index="1" value="10"/>
+        <constructor-arg name="objects" index="2" type="java.util.List">
             <list>
                 <value>--arg1=value1</value>
                 <value>--arg2=value2</value>
+                <ref bean="driver"/>
             </list>
         </constructor-arg>
 
+        <property name="properties">
+            <map>
+                <entry key="url" value="test_url"/>
+                <entry key="password" value="1234"/>
+                <entry key="driver" value-ref="driver"/>
+                <entry key="test" value="#{driver.length() > 10}"/>
+            </map>
+        </property>
+
+    </bean>
+
+<!--fabric method -->
+    <bean id="companyRepository" class="org.theory.spring_std.dependency_injection.exmpl_1.repository.CompanyRepository" factory-method="of">
+        <constructor-arg ref="pool2"/>
+    </bean>
+
+    <!-- My examples of DI -->
+    <bean id="EcoBoost-4" class="org.theory.spring_std.dependency_injection.exmpl_2.Engine" scope="prototype">
+        <constructor-arg value="EcoBoost"/>
+        <constructor-arg value="4"/>
+    </bean>
+
+    <bean id="RadioSamsung-1" class="org.theory.spring_std.dependency_injection.exmpl_2.Radio" scope="prototype">
+        <property name="name" value="Samsung RR-1"/>
+    </bean>
+
+    <bean id="Corolla-1" name="Toyota Corolla" class="org.theory.spring_std.dependency_injection.exmpl_2.Car">
+        <constructor-arg value="Corolla 1"/>
+        <constructor-arg value="12000"/>
+        <constructor-arg>
+            <list>
+                <value>tYY944ui1</value>
+                <value>tYY944ui2</value>
+                <value>tYY944ui3</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg>
+            <map>
+                <entry key="engine" value="2024-08-09T10:34:36.748113"/>
+                <entry key="engine" value="2024-09-09T10:34:36.748113"/>
+                <entry key="engine" value="2024-10-09T10:34:36.748113"/>
+            </map>
+        </constructor-arg>
+        <constructor-arg ref="EcoBoost-4"/>
+        <constructor-arg ref="RadioSamsung-1"/>
+    </bean>
+
+    <bean id="ConnectionPool-1" class="org.theory.spring_std.dependency_injection.exmpl_2.ConnectionPool">
+        <constructor-arg value="14"/>
+    </bean>
+
+    <bean id="CarRep-1" class="org.theory.spring_std.dependency_injection.exmpl_2.CarRepository" factory-method="of">
+        <constructor-arg ref="ConnectionPool-1"/>
     </bean>
 </beans>
