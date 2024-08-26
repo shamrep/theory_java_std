@@ -8,9 +8,7 @@
 
     <!-- bean definitions here -->
 
-    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations" value="application.properties"/>
-    </bean>
+
 
     <bean id="driver" name="BD_driver" class="java.lang.String">
         <constructor-arg type="java.lang.String" value="${db.driver}"/>
@@ -91,4 +89,7 @@
     <bean id="CarRep-1" class="org.theory.spring_std.dependency_injection.exmpl_2.CarRepository" factory-method="of">
         <constructor-arg ref="ConnectionPool-1"/>
     </bean>
+
+<!--    CODE BASE CONFIGURATION -->
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 </beans>

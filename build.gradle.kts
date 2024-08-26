@@ -16,6 +16,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.18")
     implementation("com.vladmihalcea:hibernate-types-52:2.21.1")
     implementation("org.slf4j:slf4j-api:2.0.13")
+    implementation("jakarta.annotation:jakarta.annotation-api:3.0.0")
 
     implementation("org.springframework:spring-core:6.1.11")
     implementation("org.springframework:spring-context:6.1.11")
